@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Suprema Seminovos</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Estilos adicionais para animações suaves */
+        .task-card {
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-200 p-6 font-sans">
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Cabeçalho -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-6 gap-4">
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-3xl font-bold text-white tracking-tight">Suprema Seminovos</h1>
+                    <span class="bg-orange-500/20 text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full text-xs font-semibold tracking-wide">
+                        CLIENTE G30
+                    </span>
+                </div>
+                <p class="text-slate-400 mt-1 flex items-center gap-2">
+                    <i data-lucide="car" class="w-4 h-4"></i>
+                    Rio de Janeiro, RJ - Gilson Viana (18 Anos de Mercado)
+                </p>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800">
+                <div class="text-right">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Progresso do Plano</p>
+                    <p id="progress-text" class="text-xl font-bold text-emerald-400">0%</p>
+                </div>
+                <div class="w-12 h-12 rounded-full border-4 border-slate-800 relative flex items-center justify-center">
+                    <div id="progress-bar" 
+                         class="absolute inset-0 rounded-full border-4 border-emerald-500"
+                         style="clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%); opacity: 0.8;"></div>
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 relative z-10"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Secção de KPIs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Meta / Vendas Atuais</h3>
+                    <div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400"><i data-lucide="target" class="w-5 h-5"></i></div>
+                </div>
+                <p class="text-2xl font-bold text-white">30 <span class="text-lg text-slate-500 font-normal">/ 18~25</span></p>
+                <p class="text-sm text-slate-500 mt-1">Estoque: ~40 Veículos</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Custo por Mensagem</h3>
+                    <div class="p-2 bg-blue-500/10 rounded-lg text-blue-400"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+                </div>
+                <p class="text-2xl font-bold text-white">R$ 5,51</p>
+                <p class="text-sm text-emerald-500 mt-1 font-medium">Campanha excelente</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Pilar Foco (PPL)</h3>
+                    <div class="p-2 bg-purple-500/10 rounded-lg text-purple-400"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></div>
+                </div>
+                <p class="text-lg font-bold text-white leading-tight">Marketing (Nota 4.7)</p>
+                <p class="text-sm text-slate-500 mt-1">Precisa evoluir tráfego & edição</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Tática Comercial</h3>
+                    <div class="p-2 bg-amber-500/10 rounded-lg text-amber-400"><i data-lucide="users" class="w-5 h-5"></i></div>
+                </div>
+                <p class="text-lg font-bold text-white leading-tight">Método MAPA</p>
+                <p class="text-sm text-slate-500 mt-1">Foco em Agendamento Curto Prazo</p>
+            </div>
+        </div>
+
+        <!-- Quadro de Tarefas -->
+        <div class="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden flex flex-col">
+            <div class="p-6 border-b border-slate-800 bg-slate-900/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        Plano de Ação e Metrificação
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-1">Tarefas filtradas por equipa. Clique para concluir.</p>
+                </div>
+                
+                <!-- Filtros -->
+                <div class="flex items-center gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 w-full sm:w-auto overflow-x-auto" id="filter-container">
+                    <div class="pl-3 pr-2 text-slate-500 flex items-center">
+                        <i data-lucide="filter" class="w-4 h-4"></i>
+                    </div>
+                    <!-- Os botões de filtro são gerados pelo JS -->
+                </div>
+            </div>
+
+            <!-- Grelha de Tarefas -->
+            <div id="tasks-grid" class="p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 bg-slate-950/50">
+                <!-- Os cartões de tarefas são gerados pelo JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Dados das tarefas
+        const initialTasks = [
+            { 
+                id: 1, 
+                assignees: ['Guilherme'], 
+                title: 'Solicitar e acompanhar relatório diário', 
+                description: 'Cobrar da equipa o número de leads atendidos, ligações, agendamentos efetivados, visitas e vendas.',
+                category: 'Análise de Dados',
+                icon: 'bar-chart-3',
+                completed: false 
+            },
+            { 
+                id: 2, 
+                assignees: ['Guilherme'], 
+                title: 'Reestruturar campanhas de veículos', 
+                description: 'Separar Argo, Mob e HRV em campanhas individuais. Manter apenas Argo ativo (baseado na reunião de tráfego com o Wirley).',
+                category: 'Tráfego Pago',
+                icon: 'trending-up',
+                completed: false 
+            },
+            { 
+                id: 3, 
+                assignees: ['Guilherme'], 
+                title: 'Analisar fluxo de vendas do Argo 1.2', 
+                description: 'Investigar possíveis gargalos na conversão deste veículo específico (perfil de público e carro).',
+                category: 'Tráfego Pago',
+                icon: 'target',
+                completed: false 
+            },
+            { 
+                id: 4, 
+                assignees: ['Guilherme'], 
+                title: 'Solicitar treinamento de SDR', 
+                description: 'Acionar a Navegadora para marcar o treinamento de pré-atendimento com a Giovana Matos.',
+                category: 'Gestão',
+                icon: 'users',
+                completed: false 
+            },
+            { 
+                id: 5, 
+                assignees: ['Gilson/Equipe'], 
+                title: 'Entregar os 3 criativos em vídeo', 
+                description: 'Gravar e editar 3 vídeos seguindo o modelo do CapCut ensinado pelo Thairone (Ganchos, legendas e cores).',
+                category: 'Marketing',
+                icon: 'video',
+                completed: false 
+            },
+            { 
+                id: 6, 
+                assignees: ['Gilson/Equipe'], 
+                title: 'Aplicar método MAPA e Resgate', 
+                description: 'Fazer follow-up com leads frios usando 5 pontos de contato, focando em vender o agendamento a curto prazo.',
+                category: 'Processo Comercial',
+                icon: 'message-square-warning',
+                completed: false 
+            },
+            { 
+                id: 7, 
+                assignees: ['Gilson/Equipe'], 
+                title: 'Alimentar Dashboard de Ligações', 
+                description: 'Registar as tentativas e contatos de resgate no dashboard de metrificação do comercial.',
+                link: 'https://giovanag30.github.io/blocodeliga-o/',
+                category: 'Processo Comercial',
+                icon: 'layout-dashboard',
+                completed: false 
+            },
+            { 
+                id: 8, 
+                assignees: ['Gilson/Equipe'], 
+                title: 'Realizar Lives de Ofertas', 
+                description: 'Manter a consistência nas lives aos sábados (20-30 min) focadas em engajamento e giro de estoque.',
+                category: 'Marketing',
+                icon: 'smartphone',
+                completed: false 
+            }
+        ];
+
+        let tasks = [...initialTasks];
+        let currentFilter = 'Todos';
+        const filters = ['Todos', 'Guilherme', 'Gilson/Equipe'];
+
+        // Utilitário para cores das categorias
+        function getCategoryColor(category) {
+            switch(category) {
+                case 'Análise de Dados': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+                case 'Processo Comercial': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+                case 'Tráfego Pago': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                case 'Marketing': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+                case 'Gestão': return 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+                default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+            }
+        }
+
+        // Atualiza a barra de progresso
+        function updateProgress() {
+            const completed = tasks.filter(t => t.completed).length;
+            const percentage = tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0;
+            
+            document.getElementById('progress-text').innerText = `${percentage}%`;
+            document.getElementById('progress-bar').style.clipPath = `polygon(0 0, 100% 0, 100% ${percentage}%, 0 ${percentage}%)`;
+        }
+
+        // Renderiza os botões de filtro
+        function renderFilters() {
+            const container = document.getElementById('filter-container');
+            // Remove botões existentes, mantendo apenas o ícone
+            while (container.children.length > 1) {
+                container.removeChild(container.lastChild);
+            }
+
+            filters.forEach(f => {
+                const btn = document.createElement('button');
+                btn.className = `px-4 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                    currentFilter === f 
+                    ? 'bg-slate-800 text-white shadow-sm' 
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                }`;
+                btn.innerText = f;
+                btn.onclick = () => setFilter(f);
+                container.appendChild(btn);
+            });
+        }
+
+        // Alternar filtro
+        function setFilter(filter) {
+            currentFilter = filter;
+            renderFilters();
+            renderTasks();
+        }
+
+        // Alternar estado da tarefa
+        function toggleTask(taskId) {
+            const taskIndex = tasks.findIndex(t => t.id === taskId);
+            if (taskIndex > -1) {
+                tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                renderTasks();
+                updateProgress();
+            }
+        }
+
+        // Renderiza a grelha de tarefas
+        function renderTasks() {
+            const grid = document.getElementById('tasks-grid');
+            grid.innerHTML = '';
+
+            const filteredTasks = currentFilter === 'Todos' 
+                ? tasks 
+                : tasks.filter(task => task.assignees.includes(currentFilter));
+
+            if (filteredTasks.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full p-12 text-center text-slate-500 flex flex-col items-center">
+                        <i data-lucide="check-circle-2" class="w-12 h-12 mb-4 opacity-20"></i>
+                        <p>Nenhuma tarefa encontrada para este filtro.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filteredTasks.forEach(task => {
+                const card = document.createElement('div');
+                card.onclick = () => toggleTask(task.id);
+                
+                const baseClasses = "relative group cursor-pointer border rounded-2xl p-5 transition-all duration-300 flex flex-col h-full task-card";
+                const stateClasses = task.completed 
+                    ? "bg-emerald-950/20 border-emerald-900/50 opacity-60" 
+                    : "bg-slate-900 border-slate-800 hover:border-slate-600";
+                
+                card.className = `${baseClasses} ${stateClasses}`;
+
+                // Responsáveis (Avatar)
+                const assigneesHtml = task.assignees.map(assignee => `
+                    <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-900 flex items-center justify-center text-xs font-bold text-slate-300 z-10" title="${assignee}">
+                        ${assignee.charAt(0)}
+                    </div>
+                `).join('');
+
+                // Botão de Link (se existir)
+                let linkHtml = '';
+                if (task.link) {
+                    const linkStateClasses = task.completed
+                        ? 'text-slate-500 border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'
+                        : 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20';
+                    
+                    linkHtml = `
+                        <a href="${task.link}" target="_blank" rel="noopener noreferrer" 
+                           onclick="event.stopPropagation()" 
+                           class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors ${linkStateClasses}">
+                            Acessar Dashboard
+                        </a>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4 gap-4">
+                        <span class="text-xs px-3 py-1 rounded-full border font-medium whitespace-nowrap ${getCategoryColor(task.category)}">
+                            ${task.category}
+                        </span>
+                        <button class="text-slate-500 group-hover:text-emerald-400 transition-colors flex-shrink-0">
+                            <i data-lucide="${task.completed ? 'check-circle-2' : 'circle'}" class="w-6 h-6 ${task.completed ? 'text-emerald-500' : ''}"></i>
+                        </button>
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold mb-2 line-clamp-2 ${task.completed ? 'text-slate-400 line-through' : 'text-white'}">
+                        ${task.title}
+                    </h4>
+                    
+                    <div class="text-sm mb-6 flex-grow flex flex-col items-start gap-3 ${task.completed ? 'text-slate-500' : 'text-slate-400'}">
+                        <p>${task.description}</p>
+                        ${linkHtml}
+                    </div>
+                    
+                    <div class="flex items-center gap-2 mt-auto pt-4 border-t border-slate-800/50">
+                        <div class="flex -space-x-2">
+                            ${assigneesHtml}
+                        </div>
+                        <span class="text-xs text-slate-500 font-medium ml-2 truncate">
+                            Responsável: ${task.assignees.join(' e ')}
+                        </span>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Re-inicializar os ícones Lucide após modificar o DOM
+            lucide.createIcons();
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilters();
+            renderTasks();
+            updateProgress();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
